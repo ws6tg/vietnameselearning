@@ -30,8 +30,9 @@ public class UserController {
 
     @GetMapping("/login")
     public @ResponseBody
-    String hh() {
-        return "请登录";
+    ResultJson hh() {
+        return new ResultJson(0, "注册失败");
+>>>>>>> d21228c (Initial commit)
     }
 
     @PostMapping("/register")
