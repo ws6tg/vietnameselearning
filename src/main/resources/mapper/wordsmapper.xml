@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdufs.vietnameselearning.mapper.WordsMapper">
+    <resultMap id="WordsMap" type="com.gdufs.vietnameselearning.entity.Words">
+        <id  property="id" column="id"/>
+        <result property="vnword" column="vnword" />
+        <result property="cnword" column="cnword" />
+        <result property="audio" column="audio" />
+        <result property="property" column="property" />
+        <result property="cnproperty" column="cnproperty" />
+        <result property="frequency" column="frequency" />
+        <result property="hard" column="hard" />
+        <result property="thesaurus" column="thesaurus" />
+        <collection property="sentences" ofType="com.gdufs.vietnameselearning.entity.Sentences">
+            <id property="id" column="s_id"/>
+            <result property="vnsentence" column="vnsentence"/>
+            <result property="cnsentence" column="cnsentence"/>
+            <result property="origin" column="origin"/>
+        </collection>
+    </resultMap>
+
+    <select id="getWordsAndSentencesByThesaurusId" resultMap="WordsMap" parameterType="int">
+        SELECT t_words.*,
+               t_sentences.id s_id,
+               t_sentences.vnsentence,
+               t_sentences.cnsentence,
+               t_sentences.origin
+        FROM t_words left join t_sentences ON instr(t_words.sentences,concat(' ',t_sentences.id,' '))
+        WHERE instr(t_words.thesaurus,concat(' ',#{id},' '));
+    </select>
+</mapper>
