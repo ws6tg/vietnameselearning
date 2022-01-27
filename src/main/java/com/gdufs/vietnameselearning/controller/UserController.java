@@ -32,7 +32,6 @@ public class UserController {
     public @ResponseBody
     ResultJson hh() {
         return new ResultJson(0, "注册失败");
->>>>>>> d21228c (Initial commit)
     }
 
     @PostMapping("/register")
